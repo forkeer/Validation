@@ -1,6 +1,6 @@
 # Negative
 
-- `v::negative()`
+- `Negative()`
 
 Validates if a number is lower than zero
 
@@ -8,7 +8,13 @@ Validates if a number is lower than zero
 v::numericVal()->negative()->validate(-15); // true
 ```
 
+## Changelog
+
+Version | Description
+--------|-------------
+  0.3.9 | Created
+
 ***
 See also:
 
-  * [Positive](Positive.md)
+- [Positive](Positive.md)
