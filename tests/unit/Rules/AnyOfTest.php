@@ -9,16 +9,20 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Respect\Validation\Rules;
+
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group  rule
  * @covers \Respect\Validation\Rules\AnyOf
  * @covers \Respect\Validation\Exceptions\AnyOfException
  */
-class AnyOfTest extends \PHPUnit_Framework_TestCase
+class AnyOfTest extends TestCase
 {
-    public function testValid()
+    public function testValid(): void
     {
         $valid1 = new Callback(function () {
             return false;
@@ -30,15 +34,15 @@ class AnyOfTest extends \PHPUnit_Framework_TestCase
             return false;
         });
         $o = new AnyOf($valid1, $valid2, $valid3);
-        $this->assertTrue($o->validate('any'));
-        $this->assertTrue($o->assert('any'));
-        $this->assertTrue($o->check('any'));
+        self::assertTrue($o->validate('any'));
+        self::assertTrue($o->assert('any'));
+        self::assertTrue($o->check('any'));
     }
 
     /**
      * @expectedException \Respect\Validation\Exceptions\AnyOfException
      */
-    public function testInvalid()
+    public function testInvalid(): void
     {
         $valid1 = new Callback(function () {
             return false;
@@ -50,17 +54,17 @@ class AnyOfTest extends \PHPUnit_Framework_TestCase
             return false;
         });
         $o = new AnyOf($valid1, $valid2, $valid3);
-        $this->assertFalse($o->validate('any'));
-        $this->assertFalse($o->assert('any'));
+        self::assertFalse($o->validate('any'));
+        self::assertFalse($o->assert('any'));
     }
 
     /**
      * @expectedException \Respect\Validation\Exceptions\XdigitException
      */
-    public function testInvalidCheck()
+    public function testInvalidCheck(): void
     {
         $o = new AnyOf(new Xdigit(), new Alnum());
-        $this->assertFalse($o->validate(-10));
-        $this->assertFalse($o->check(-10));
+        self::assertFalse($o->validate(-10));
+        self::assertFalse($o->check(-10));
     }
 }

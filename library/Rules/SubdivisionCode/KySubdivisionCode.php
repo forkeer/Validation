@@ -9,20 +9,28 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Respect\Validation\Rules\SubdivisionCode;
 
 use Respect\Validation\Rules\AbstractSearcher;
 
 /**
- * Validator for Cayman Islands subdivision code.
+ * Validates whether an input is subdivision code of Cayman Islands or not.
  *
  * ISO 3166-1 alpha-2: KY
  *
- * @link http://www.geonames.org/KY/administrative-division-cayman-islands.html
+ * @see http://www.geonames.org/KY/administrative-division-cayman-islands.html
+ *
+ * @author Henrique Moody <henriquemoody@gmail.com>
  */
-class KySubdivisionCode extends AbstractSearcher
+final class KySubdivisionCode extends AbstractSearcher
 {
-    public $haystack = [null, ''];
-
-    public $compareIdentical = true;
+    /**
+     * {@inheritdoc}
+     */
+    protected function getDataSource(): array
+    {
+        return [];
+    }
 }

@@ -9,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Respect\Validation;
 
 use finfo;
@@ -21,7 +23,7 @@ use Respect\Validation\Rules\Key;
 
 /**
  * @method static Validator age(int $minAge = null, int $maxAge = null)
- * @method static Validator allOf()
+ * @method static Validator allOf(Validatable ...$rule)
  * @method static Validator alnum(string $additionalChars = null)
  * @method static Validator alpha(string $additionalChars = null)
  * @method static Validator alwaysInvalid()
@@ -30,11 +32,9 @@ use Respect\Validation\Rules\Key;
  * @method static Validator arrayType()
  * @method static Validator arrayVal()
  * @method static Validator attribute(string $reference, Validatable $validator = null, bool $mandatory = true)
- * @method static Validator bank(string $countryCode)
- * @method static Validator bankAccount(string $countryCode)
  * @method static Validator base()
+ * @method static Validator base64()
  * @method static Validator between(mixed $min = null, mixed $max = null, bool $inclusive = true)
- * @method static Validator bic(string $countryCode)
  * @method static Validator boolType()
  * @method static Validator boolVal()
  * @method static Validator bsn()
@@ -94,16 +94,17 @@ use Respect\Validation\Rules\Key;
  * @method static Validator leapYear()
  * @method static Validator length(int $min = null, int $max = null, bool $inclusive = true)
  * @method static Validator lowercase()
+ * @method static Validator luhn()
  * @method static Validator macAddress()
  * @method static Validator max(mixed $maxValue, bool $inclusive = true)
  * @method static Validator mimetype(string $mimetype)
  * @method static Validator min(mixed $minValue, bool $inclusive = true)
- * @method static Validator minimumAge(int $age)
+ * @method static Validator minimumAge(int $age, bool $format = null)
  * @method static Validator multiple(int $multipleOf)
  * @method static Validator negative()
  * @method static Validator nif()
  * @method static Validator no($useLocale = false)
- * @method static Validator noneOf()
+ * @method static Validator noneOf(Validatable ...$rule)
  * @method static Validator not(Validatable $rule)
  * @method static Validator notBlank()
  * @method static Validator notEmpty()
@@ -114,7 +115,7 @@ use Respect\Validation\Rules\Key;
  * @method static Validator numericVal()
  * @method static Validator objectType()
  * @method static Validator odd()
- * @method static Validator oneOf(Validatable $v1, Validatable $v_)
+ * @method static Validator oneOf(Validatable ...$rule)
  * @method static Validator optional(Validatable $rule)
  * @method static Validator perfectSquare()
  * @method static Validator pesel()
@@ -147,6 +148,7 @@ use Respect\Validation\Rules\Key;
  * @method static Validator uploaded()
  * @method static Validator uppercase()
  * @method static Validator url()
+ * @method static Validator uuid()
  * @method static Validator vatin(string $countryCode)
  * @method static Validator version()
  * @method static Validator videoUrl(string $service = null)
@@ -159,47 +161,12 @@ use Respect\Validation\Rules\Key;
  */
 class Validator extends AllOf
 {
-    protected static $factory;
-
-    /**
-     * @return Factory
-     */
-    protected static function getFactory()
-    {
-        if (!static::$factory instanceof Factory) {
-            static::$factory = new Factory();
-        }
-
-        return static::$factory;
-    }
-
-    /**
-     * @param Factory $factory
-     */
-    public static function setFactory($factory)
-    {
-        static::$factory = $factory;
-    }
-
-    /**
-     * @param string $rulePrefix
-     * @param bool   $prepend
-     */
-    public static function with($rulePrefix, $prepend = false)
-    {
-        if (false === $prepend) {
-            self::getFactory()->appendRulePrefix($rulePrefix);
-        } else {
-            self::getFactory()->prependRulePrefix($rulePrefix);
-        }
-    }
-
     public function check($input)
     {
         try {
             return parent::check($input);
         } catch (ValidationException $exception) {
-            if (count($this->getRules()) == 1 && $this->template) {
+            if (1 == count($this->getRules()) && $this->template) {
                 $exception->setTemplate($this->template);
             }
 
@@ -233,7 +200,7 @@ class Validator extends AllOf
     public static function buildRule($ruleSpec, $arguments = [])
     {
         try {
-            return static::getFactory()->rule($ruleSpec, $arguments);
+            return Factory::getDefaultInstance()->rule($ruleSpec, $arguments);
         } catch (\Exception $exception) {
             throw new ComponentException($exception->getMessage(), $exception->getCode(), $exception);
         }
@@ -248,11 +215,6 @@ class Validator extends AllOf
     public function __call($method, $arguments)
     {
         return $this->addRule(static::buildRule($method, $arguments));
-    }
-
-    protected function createException()
-    {
-        return new AllOfException();
     }
 
     /**

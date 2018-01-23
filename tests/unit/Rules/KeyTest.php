@@ -9,43 +9,47 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Respect\Validation\Rules;
+
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group  rule
  * @covers \Respect\Validation\Rules\Key
  * @covers \Respect\Validation\Exceptions\KeyException
  */
-class KeyTest extends \PHPUnit_Framework_TestCase
+class KeyTest extends TestCase
 {
-    public function testArrayWithPresentKeyShouldReturnTrue()
+    public function testArrayWithPresentKeyShouldReturnTrue(): void
     {
         $validator = new Key('bar');
         $someArray = [];
         $someArray['bar'] = 'foo';
-        $this->assertTrue($validator->validate($someArray));
+        self::assertTrue($validator->validate($someArray));
     }
 
-    public function testArrayWithNumericKeyShouldReturnTrue()
+    public function testArrayWithNumericKeyShouldReturnTrue(): void
     {
         $validator = new Key(0);
         $someArray = [];
         $someArray[0] = 'foo';
-        $this->assertTrue($validator->validate($someArray));
+        self::assertTrue($validator->validate($someArray));
     }
 
-    public function testEmptyInputMustReturnFalse()
+    public function testEmptyInputMustReturnFalse(): void
     {
         $validator = new Key('someEmptyKey');
         $input = '';
 
-        $this->assertFalse($validator->validate($input));
+        self::assertFalse($validator->validate($input));
     }
 
     /**
      * @expectedException \Respect\Validation\Exceptions\KeyException
      */
-    public function testEmptyInputMustNotAssert()
+    public function testEmptyInputMustNotAssert(): void
     {
         $validator = new Key('someEmptyKey');
         $validator->assert('');
@@ -54,22 +58,22 @@ class KeyTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \Respect\Validation\Exceptions\KeyException
      */
-    public function testEmptyInputMustNotCheck()
+    public function testEmptyInputMustNotCheck(): void
     {
         $validator = new Key('someEmptyKey');
         $validator->check('');
     }
 
-    public function testArrayWithEmptyKeyShouldReturnTrue()
+    public function testArrayWithEmptyKeyShouldReturnTrue(): void
     {
         $validator = new Key('someEmptyKey');
         $input = [];
         $input['someEmptyKey'] = '';
 
-        $this->assertTrue($validator->validate($input));
+        self::assertTrue($validator->validate($input));
     }
 
-    public function testShouldHaveTheSameReturnValueForAllValidators()
+    public function testShouldHaveTheSameReturnValueForAllValidators(): void
     {
         $rule = new Key('key', new NotEmpty());
         $input = ['key' => ''];
@@ -86,51 +90,52 @@ class KeyTest extends \PHPUnit_Framework_TestCase
         } catch (\Exception $e) {
         }
 
-        $this->assertFalse($rule->validate($input));
+        self::assertFalse($rule->validate($input));
     }
 
     /**
      * @expectedException \Respect\Validation\Exceptions\KeyException
      */
-    public function testArrayWithAbsentKeyShouldThrowKeyException()
+    public function testArrayWithAbsentKeyShouldThrowKeyException(): void
     {
         $validator = new Key('bar');
         $someArray = [];
         $someArray['baraaaaaa'] = 'foo';
-        $this->assertTrue($validator->assert($someArray));
+        self::assertTrue($validator->assert($someArray));
     }
+
     /**
      * @expectedException \Respect\Validation\Exceptions\KeyException
      */
-    public function testNotArrayShouldThrowKeyException()
+    public function testNotArrayShouldThrowKeyException(): void
     {
         $validator = new Key('bar');
         $someArray = 123;
-        $this->assertFalse($validator->assert($someArray));
+        self::assertFalse($validator->assert($someArray));
     }
 
     /**
      * @expectedException \Respect\Validation\Exceptions\ComponentException
      */
-    public function testInvalidConstructorParametersShouldThrowComponentExceptionUponInstantiation()
+    public function testInvalidConstructorParametersShouldThrowComponentExceptionUponInstantiation(): void
     {
         $validator = new Key(['invalid']);
     }
 
-    public function testExtraValidatorShouldValidateKey()
+    public function testExtraValidatorShouldValidateKey(): void
     {
         $subValidator = new Length(1, 3);
         $validator = new Key('bar', $subValidator);
         $someArray = [];
         $someArray['bar'] = 'foo';
-        $this->assertTrue($validator->assert($someArray));
+        self::assertTrue($validator->assert($someArray));
     }
 
-    public function testNotMandatoryExtraValidatorShouldPassWithAbsentKey()
+    public function testNotMandatoryExtraValidatorShouldPassWithAbsentKey(): void
     {
         $subValidator = new Length(1, 3);
         $validator = new Key('bar', $subValidator, false);
         $someArray = [];
-        $this->assertTrue($validator->validate($someArray));
+        self::assertTrue($validator->validate($someArray));
     }
 }

@@ -9,7 +9,11 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Respect\Validation\Rules;
+
+use Respect\Validation\Test\RuleTestCase;
 
 /**
  * @group  rule
@@ -18,7 +22,7 @@ namespace Respect\Validation\Rules;
  */
 class JsonTest extends RuleTestCase
 {
-    public function providerForValidInput()
+    public function providerForValidInput(): array
     {
         $json = new Json();
 
@@ -35,7 +39,7 @@ class JsonTest extends RuleTestCase
         ];
     }
 
-    public function providerForInvalidInput()
+    public function providerForInvalidInput(): array
     {
         $json = new Json();
 

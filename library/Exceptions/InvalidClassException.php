@@ -9,16 +9,17 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Respect\Validation\Exceptions;
 
-class BankException extends ValidationException
+/**
+ * Exception for invalid classes.
+ *
+ * @author Henrique Moody <henriquemoody@gmail.com>
+ *
+ * @since 2.0.0
+ */
+final class InvalidClassException extends ComponentException
 {
-    public static $defaultTemplates = [
-        self::MODE_DEFAULT => [
-            self::STANDARD => '{{name}} must be a bank',
-        ],
-        self::MODE_NEGATIVE => [
-            self::STANDARD => '{{name}} must not be a bank',
-        ],
-    ];
 }

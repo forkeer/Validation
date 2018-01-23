@@ -9,13 +9,17 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Respect\Validation\Rules;
+
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group  rule
  * @covers \Respect\Validation\Rules\Tld
  */
-class TldTest extends \PHPUnit_Framework_TestCase
+class TldTest extends TestCase
 {
     public function providerForValidTld()
     {
@@ -33,11 +37,11 @@ class TldTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerForValidTld
      */
-    public function testShouldValidateInputWhenItIsAValidTld($input)
+    public function testShouldValidateInputWhenItIsAValidTld($input): void
     {
         $rule = new Tld();
 
-        $this->assertTrue($rule->validate($input));
+        self::assertTrue($rule->validate($input));
     }
 
     public function providerForInvalidTld()
@@ -53,10 +57,10 @@ class TldTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerForInvalidTld
      */
-    public function testShouldInvalidateInputWhenItIsNotAValidTld($input)
+    public function testShouldInvalidateInputWhenItIsNotAValidTld($input): void
     {
         $rule = new Tld();
 
-        $this->assertFalse($rule->validate($input));
+        self::assertFalse($rule->validate($input));
     }
 }

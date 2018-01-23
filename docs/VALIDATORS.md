@@ -169,13 +169,11 @@
 
 ## Banking
 
-- [Bank](Bank.md)
-- [BankAccount](BankAccount.md)
-- [Bic](Bic.md)
 - [CreditCard](CreditCard.md)
 
 ## Other
 
+- [Base64](Base64.md)
 - [Bsn](Bsn.md)
 - [Cnh](Cnh.md)
 - [Cnpj](Cnpj.md)
@@ -186,6 +184,7 @@
 - [Imei](Imei.md)
 - [Ip](Ip.md)
 - [Json](Json.md)
+- [Luhn](Luhn.md)
 - [MacAddress](MacAddress.md)
 - [NfeAccessKey](NfeAccessKey.md)
 - [Nif](Nif.md)
@@ -196,6 +195,7 @@
 - [Pis](Pis.md)
 - [Sf](Sf.md)
 - [Url](Url.md)
+- [Uuid](Uuid.md)
 - [Vatin](Vatin.md)
 - [VideoUrl](VideoUrl.md)
 - [Zend](Zend.md)
@@ -217,11 +217,9 @@
 - [ArrayType](ArrayType.md)
 - [ArrayVal](ArrayVal.md)
 - [Attribute](Attribute.md)
-- [Bank](Bank.md)
-- [BankAccount](BankAccount.md)
 - [Base](Base.md)
+- [Base64](Base64.md)
 - [Between](Between.md)
-- [Bic](Bic.md)
 - [BoolType](BoolType.md)
 - [BoolVal](BoolVal.md)
 - [Bsn](Bsn.md)
@@ -283,6 +281,7 @@
 - [LeapYear](LeapYear.md)
 - [Length](Length.md)
 - [Lowercase](Lowercase.md)
+- [Luhn](Luhn.md)
 - [MacAddress](MacAddress.md)
 - [Max](Max.md)
 - [Mimetype](Mimetype.md)
@@ -336,6 +335,7 @@
 - [Uploaded](Uploaded.md)
 - [Uppercase](Uppercase.md)
 - [Url](Url.md)
+- [Uuid](Uuid.md)
 - [Vatin](Vatin.md)
 - [Version](Version.md)
 - [VideoUrl](VideoUrl.md)

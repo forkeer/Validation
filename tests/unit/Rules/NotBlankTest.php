@@ -9,8 +9,11 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Respect\Validation\Rules;
 
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
 /**
@@ -18,33 +21,33 @@ use stdClass;
  * @covers \Respect\Validation\Rules\NotBlank
  * @covers \Respect\Validation\Exceptions\NotBlankException
  */
-class NotBlankTest extends \PHPUnit_Framework_TestCase
+class NotBlankTest extends TestCase
 {
     /**
      * @dataProvider providerForNotBlank
      */
-    public function testShouldValidateWhenNotBlank($input)
+    public function testShouldValidateWhenNotBlank($input): void
     {
         $rule = new NotBlank();
 
-        $this->assertTrue($rule->validate($input));
+        self::assertTrue($rule->validate($input));
     }
 
     /**
      * @dataProvider providerForBlank
      */
-    public function testShouldNotValidateWhenBlank($input)
+    public function testShouldNotValidateWhenBlank($input): void
     {
         $rule = new NotBlank();
 
-        $this->assertFalse($rule->validate($input));
+        self::assertFalse($rule->validate($input));
     }
 
     /**
      * @expectedException \Respect\Validation\Exceptions\NotBlankException
      * @expectedExceptionMessage The value must not be blank
      */
-    public function testShouldThrowExceptionWhenFailure()
+    public function testShouldThrowExceptionWhenFailure(): void
     {
         $rule = new NotBlank();
         $rule->check(0);
@@ -54,7 +57,7 @@ class NotBlankTest extends \PHPUnit_Framework_TestCase
      * @expectedException \Respect\Validation\Exceptions\NotBlankException
      * @expectedExceptionMessage whatever must not be blank
      */
-    public function testShouldThrowExceptionWhenFailureAndDoesHaveAName()
+    public function testShouldThrowExceptionWhenFailureAndDoesHaveAName(): void
     {
         $rule = new NotBlank();
         $rule->setName('whatever');

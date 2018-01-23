@@ -9,68 +9,72 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Respect\Validation\Rules;
+
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group  rule
  * @covers \Respect\Validation\Rules\Sorted
  * @covers \Respect\Validation\Exceptions\SortedException
  */
-class SortedTest extends \PHPUnit_Framework_TestCase
+class SortedTest extends TestCase
 {
-    public function testPasses()
+    public function testPasses(): void
     {
-        $arr = [1,2,3];
+        $arr = [1, 2, 3];
         $rule = new Sorted();
 
-        $this->assertTrue($rule->validate($arr));
-        $this->assertTrue($rule->assert($arr));
-        $this->assertTrue($rule->check($arr));
+        self::assertTrue($rule->validate($arr));
+        self::assertTrue($rule->assert($arr));
+        self::assertTrue($rule->check($arr));
     }
 
-    public function testPassesWithEqualValues()
+    public function testPassesWithEqualValues(): void
     {
-        $arr = [1,2,2,3];
+        $arr = [1, 2, 2, 3];
         $rule = new Sorted();
 
-        $this->assertTrue($rule->validate($arr));
-        $this->assertTrue($rule->assert($arr));
-        $this->assertTrue($rule->check($arr));
+        self::assertTrue($rule->validate($arr));
+        self::assertTrue($rule->assert($arr));
+        self::assertTrue($rule->check($arr));
     }
 
     /**
      * @expectedException \Respect\Validation\Exceptions\SortedException
      */
-    public function testNotPasses()
+    public function testNotPasses(): void
     {
-        $arr = [1,2,4,3];
+        $arr = [1, 2, 4, 3];
         $rule = new Sorted();
 
-        $this->assertFalse($rule->validate($arr));
-        $this->assertFalse($rule->check($arr));
+        self::assertFalse($rule->validate($arr));
+        self::assertFalse($rule->check($arr));
     }
 
-    public function testPassesDescending()
+    public function testPassesDescending(): void
     {
-        $arr = [10,9,8];
+        $arr = [10, 9, 8];
         $rule = new Sorted(null, false);
 
-        $this->assertTrue($rule->validate($arr));
-        $this->assertTrue($rule->assert($arr));
-        $this->assertTrue($rule->check($arr));
+        self::assertTrue($rule->validate($arr));
+        self::assertTrue($rule->assert($arr));
+        self::assertTrue($rule->check($arr));
     }
 
-    public function testPassesDescendingWithEqualValues()
+    public function testPassesDescendingWithEqualValues(): void
     {
-        $arr = [10,9,9,8];
+        $arr = [10, 9, 9, 8];
         $rule = new Sorted(null, false);
 
-        $this->assertTrue($rule->validate($arr));
-        $this->assertTrue($rule->assert($arr));
-        $this->assertTrue($rule->check($arr));
+        self::assertTrue($rule->validate($arr));
+        self::assertTrue($rule->assert($arr));
+        self::assertTrue($rule->check($arr));
     }
 
-    public function testPassesByFunction()
+    public function testPassesByFunction(): void
     {
         $arr = [
             [
@@ -83,19 +87,19 @@ class SortedTest extends \PHPUnit_Framework_TestCase
                 'key' => 5,
             ],
         ];
-        $rule = new Sorted(function($x){
+        $rule = new Sorted(function ($x) {
             return $x['key'];
         });
 
-        $this->assertTrue($rule->validate($arr));
-        $this->assertTrue($rule->assert($arr));
-        $this->assertTrue($rule->check($arr));
+        self::assertTrue($rule->validate($arr));
+        self::assertTrue($rule->assert($arr));
+        self::assertTrue($rule->check($arr));
     }
 
     /**
      * @expectedException \Respect\Validation\Exceptions\SortedException
      */
-    public function testNotPassesByFunction()
+    public function testNotPassesByFunction(): void
     {
         $arr = [
             [
@@ -112,7 +116,7 @@ class SortedTest extends \PHPUnit_Framework_TestCase
             return $x['key'];
         });
 
-        $this->assertFalse($rule->validate($arr));
-        $this->assertFalse($rule->check($arr));
+        self::assertFalse($rule->validate($arr));
+        self::assertFalse($rule->check($arr));
     }
 }

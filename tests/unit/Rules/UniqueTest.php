@@ -9,7 +9,11 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Respect\Validation\Rules;
+
+use Respect\Validation\Test\RuleTestCase;
 
 /**
  * @group  rule
@@ -17,7 +21,7 @@ namespace Respect\Validation\Rules;
  */
 class UniqueTest extends RuleTestCase
 {
-    public function providerForValidInput()
+    public function providerForValidInput(): array
     {
         $rule = new Unique();
 
@@ -32,7 +36,7 @@ class UniqueTest extends RuleTestCase
         ];
     }
 
-    public function providerForInvalidInput()
+    public function providerForInvalidInput(): array
     {
         $rule = new Unique();
 

@@ -9,7 +9,11 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Respect\Validation\Rules;
+
+use Respect\Validation\Test\RuleTestCase;
 
 /**
  * @group  rule
@@ -18,7 +22,7 @@ namespace Respect\Validation\Rules;
  */
 class PhpLabelTest extends RuleTestCase
 {
-    public function providerForValidInput()
+    public function providerForValidInput(): array
     {
         $rule = new PhpLabel();
 
@@ -33,7 +37,7 @@ class PhpLabelTest extends RuleTestCase
         ];
     }
 
-    public function providerForInvalidInput()
+    public function providerForInvalidInput(): array
     {
         $rule = new PhpLabel();
 
@@ -49,7 +53,7 @@ class PhpLabelTest extends RuleTestCase
             [$rule, 'f o o'],
             [$rule, '0ne'],
             [$rule, '0_ne'],
-            [$rule, uniqid(mt_rand(0, 9))],
+            [$rule, uniqid((string) random_int(0, 9))],
             [$rule, null],
             [$rule, mt_rand()],
             [$rule, 0],

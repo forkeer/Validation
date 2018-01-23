@@ -9,18 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace Respect\Validation\Exceptions\Locale;
+declare(strict_types=1);
 
-use Respect\Validation\Exceptions\BankException;
+namespace Respect\Validation\Exceptions;
 
-class GermanBankException extends BankException
+class LuhnException extends ValidationException
 {
     public static $defaultTemplates = [
         self::MODE_DEFAULT => [
-            self::STANDARD => '{{name}} must be a german bank',
+            self::STANDARD => '{{name}} must be a valid Luhn number',
         ],
         self::MODE_NEGATIVE => [
-            self::STANDARD => '{{name}} must not be a german bank',
+            self::STANDARD => '{{name}} must not be a valid Luhn number',
         ],
     ];
 }

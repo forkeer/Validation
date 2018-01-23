@@ -9,9 +9,12 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Respect\Validation\Rules;
 
 use DateTime;
+use PHPUnit\Framework\TestCase;
 use Zend\Validator\Date as ZendDate;
 use Zend\Validator\ValidatorInterface;
 
@@ -20,12 +23,12 @@ use Zend\Validator\ValidatorInterface;
  * @covers \Respect\Validation\Rules\Zend
  * @covers \Respect\Validation\Exceptions\ZendException
  */
-class ZendTest extends \PHPUnit_Framework_TestCase
+class ZendTest extends TestCase
 {
-    public function testConstructorWithValidatorName()
+    public function testConstructorWithValidatorName(): void
     {
         $v = new Zend('Date');
-        $this->assertAttributeInstanceOf(
+        self::assertAttributeInstanceOf(
             $instanceOf = ValidatorInterface::class,
             $attribute = 'zendValidator',
             $instance = $v
@@ -35,21 +38,21 @@ class ZendTest extends \PHPUnit_Framework_TestCase
     /**
      * @depends testConstructorWithValidatorName
      */
-    public function testConstructorWithValidatorClassName()
+    public function testConstructorWithValidatorClassName(): void
     {
         $v = new Zend(ZendDate::class);
-        $this->assertAttributeInstanceOf(
+        self::assertAttributeInstanceOf(
             $instanceOf = ValidatorInterface::class,
             $attribute = 'zendValidator',
             $instance = $v
         );
     }
 
-    public function testConstructorWithZendValidatorInstance()
+    public function testConstructorWithZendValidatorInstance(): void
     {
         $zendInstance = new ZendDate();
         $v = new Zend($zendInstance);
-        $this->assertAttributeSame(
+        self::assertAttributeSame(
             $expected = $zendInstance,
             $attribute = 'zendValidator',
             $instance = $v
@@ -59,20 +62,20 @@ class ZendTest extends \PHPUnit_Framework_TestCase
     /**
      * @depends testConstructorWithZendValidatorInstance
      */
-    public function testUserlandValidatorExtendingZendInterface()
+    public function testUserlandValidatorExtendingZendInterface(): void
     {
         $v = new Zend(new MyValidator());
-        $this->assertAttributeInstanceOf(
+        self::assertAttributeInstanceOf(
             $instanceOf = ValidatorInterface::class,
             $attribute = 'zendValidator',
             $instance = $v
         );
     }
 
-    public function testConstructorWithZendValidatorPartialNamespace()
+    public function testConstructorWithZendValidatorPartialNamespace(): void
     {
         $v = new Zend('Sitemap\Lastmod');
-        $this->assertAttributeInstanceOf(
+        self::assertAttributeInstanceOf(
             $instanceOf = ValidatorInterface::class,
             $attribute = 'zendValidator',
             $instance = $v
@@ -83,12 +86,12 @@ class ZendTest extends \PHPUnit_Framework_TestCase
      * @depends testConstructorWithValidatorName
      * @depends testConstructorWithZendValidatorPartialNamespace
      */
-    public function testConstructorWithValidatorName_and_params()
+    public function testConstructorWithValidatorName_and_params(): void
     {
         $zendValidatorName = 'StringLength';
         $zendValidatorParams = ['min' => 10, 'max' => 25];
         $v = new Zend($zendValidatorName, $zendValidatorParams);
-        $this->assertTrue(
+        self::assertTrue(
             $v->validate('12345678901'),
             'The value should be valid for Zend\'s validator'
         );
@@ -97,12 +100,12 @@ class ZendTest extends \PHPUnit_Framework_TestCase
     /**
      * @depends testConstructorWithValidatorName
      */
-    public function testZendDateValidatorWithRespectMethods()
+    public function testZendDateValidatorWithRespectMethods(): void
     {
         $v = new Zend('Date');
         $date = new DateTime();
-        $this->assertTrue($v->validate($date));
-        $this->assertTrue($v->assert($date));
+        self::assertTrue($v->validate($date));
+        self::assertTrue($v->assert($date));
     }
 
     /**
@@ -110,15 +113,15 @@ class ZendTest extends \PHPUnit_Framework_TestCase
      * @depends testZendDateValidatorWithRespectMethods
      * @expectedException \Respect\Validation\Exceptions\ZendException
      */
-    public function testRespectExceptionForFailedValidation()
+    public function testRespectExceptionForFailedValidation(): void
     {
         $v = new Zend('Date');
         $notValid = 'a';
-        $this->assertFalse(
+        self::assertFalse(
             $v->validate($notValid),
             'The validator returned true for an invalid value, this won\'t cause an exception later on.'
         );
-        $this->assertFalse(
+        self::assertFalse(
             $v->assert($notValid)
         );
     }
@@ -129,10 +132,10 @@ class ZendTest extends \PHPUnit_Framework_TestCase
      * @depends testZendDateValidatorWithRespectMethods
      * @expectedException \Respect\Validation\Exceptions\ZendException
      */
-    public function testParamsNot()
+    public function testParamsNot(): void
     {
         $v = new Zend('StringLength', ['min' => 10, 'max' => 25]);
-        $this->assertFalse($v->assert('aw'));
+        self::assertFalse($v->assert('aw'));
     }
 }
 

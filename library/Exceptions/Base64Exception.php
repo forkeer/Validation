@@ -9,18 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace Respect\Validation\Exceptions\Locale;
+declare(strict_types=1);
 
-use Respect\Validation\Exceptions\BicException;
+namespace Respect\Validation\Exceptions;
 
-class GermanBicException extends BicException
+class Base64Exception extends ValidationException
 {
     public static $defaultTemplates = [
         self::MODE_DEFAULT => [
-            self::STANDARD => '{{name}} must be a german BIC',
+            self::STANDARD => '{{name}} must be Base64-encoded',
         ],
         self::MODE_NEGATIVE => [
-            self::STANDARD => '{{name}} must not be a german BIC',
+            self::STANDARD => '{{name}} must not be Base64-encoded',
         ],
     ];
 }

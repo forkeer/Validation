@@ -9,18 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace Respect\Validation\Exceptions\Locale;
+declare(strict_types=1);
 
-use Respect\Validation\Exceptions\BankAccountException;
+namespace Respect\Validation\Exceptions;
 
-class GermanBankAccountException extends BankAccountException
+class UuidException extends ValidationException
 {
     public static $defaultTemplates = [
         self::MODE_DEFAULT => [
-            self::STANDARD => '{{name}} must be a german bank account',
+            self::STANDARD => '{{name}} must be a valid UUID',
         ],
         self::MODE_NEGATIVE => [
-            self::STANDARD => '{{name}} must not be a german bank account',
+            self::STANDARD => '{{name}} must not be a valid UUID',
         ],
     ];
 }

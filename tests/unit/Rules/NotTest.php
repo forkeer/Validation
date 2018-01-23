@@ -9,8 +9,11 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Respect\Validation\Rules;
 
+use PHPUnit\Framework\TestCase;
 use Respect\Validation\Validator;
 
 /**
@@ -18,37 +21,37 @@ use Respect\Validation\Validator;
  * @covers \Respect\Validation\Rules\Not
  * @covers \Respect\Validation\Exceptions\NotException
  */
-class NotTest extends \PHPUnit_Framework_TestCase
+class NotTest extends TestCase
 {
     /**
      * @dataProvider providerForValidNot
      */
-    public function testNot($v, $input)
+    public function testNot($v, $input): void
     {
         $not = new Not($v);
-        $this->assertTrue($not->assert($input));
+        self::assertTrue($not->assert($input));
     }
 
     /**
      * @dataProvider providerForInvalidNot
      * @expectedException \Respect\Validation\Exceptions\ValidationException
      */
-    public function testNotNotHaha($v, $input)
+    public function testNotNotHaha($v, $input): void
     {
         $not = new Not($v);
-        $this->assertFalse($not->assert($input));
+        self::assertFalse($not->assert($input));
     }
 
     /**
      * @dataProvider providerForSetName
      */
-    public function testNotSetName($v)
+    public function testNotSetName($v): void
     {
         $not = new Not($v);
         $not->setName('Foo');
 
-        $this->assertEquals('Foo', $not->getName());
-        $this->assertEquals('Foo', $v->getName());
+        self::assertEquals('Foo', $not->getName());
+        self::assertEquals('Foo', $v->getName());
     }
 
     public function providerForValidNot()
